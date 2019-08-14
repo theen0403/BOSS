@@ -1,0 +1,91 @@
+﻿@model BOSS.Models.FMAccounts.GeneralAccountsModel
+@{
+    BOSSEFConnectionString BOSSDB = new BOSSEFConnectionString();
+}
+@using BOSS.Models;
+
+<div id="GeneralAccntTempID">
+
+</div>
+<div id="TableGenAccntID" class="mt-2">
+
+</div>
+
+
+<script>
+    $(function () {
+        GetAddGeneralAccount();
+    })
+
+    function GetAddGeneralAccount() {
+        $.ajax({
+            url: '/FileMaintenanceAccounts/GetAddGeneralAccount',
+            success: function (result) {
+                $("#GeneralAccntTempID").html(result);
+            }
+        })
+    }
+    //var GlobalAllotID = 0;
+    function GetDynamicAllotmentClass() {
+        // var AllotmentID = GlobalAllotID;
+        var AllotmentID = $("#TempAllot").val();
+        $.ajax({
+            url: '/FileMaintenanceAccounts/GetDynamicAllotmentClass',
+            data: { AllotmentID: AllotmentID },
+            success: function (result) {
+                $("#dynamicAllotmentID").html(result);
+                GetGeneralAccountDT();
+            }
+        })
+    }
+    function GetDynamicAllotmentClass2() {
+        var AllotmentID = $("#TempAllot").val();
+        $.ajax({
+            url: '/FileMaintenanceAccounts/GetDynamicAllotmentClass2',
+            data: { AllotmentID: AllotmentID },
+            success: function (result) {
+                $("#dynamicAllotmentID").html(result);
+            }
+        })
+    }
+    //Display data on table
+    function GetGeneralAccountDT() {
+        var AllotmentID = $("#AllotmentID").val();
+        $.ajax({
+            url: '/FileMaintenanceAccounts/GetGeneralAccountDT',
+            data: { AllotmentID: AllotmentID },
+            success: function (result) {
+                $("#TableGenAccntID").html(result);
+                AddClearData();
+            }
+        })
+    }
+    function Get_UpdateGenAcct(GenAccountID) {
+        $.ajax({
+            url: '/FileMaintenanceAccounts/Get_UpdateGenAcct',
+            data: { GenAccountID: GenAccountID },
+            success: function (result) {
+                $('#GeneralAccntTempID').html(result);
+            }
+        })
+    }
+    function DeleteGenAcct(GenAccountID) {
+        $.ajax({
+            url: '/FileMaintenanceAccounts/DeleteGenAcct',
+            data: { GenAccountID: GenAccountID },
+            success: function (result) {
+                GetGeneralAccountDT();
+            }
+        })
+    }
+    //Clear Fields
+    function AddClearData() {
+        $("#GenAccountTitle").val("");
+        $("#GenAccountCode").val("");
+        $("#ReservePercent").val("");
+        $("#isReserveIDD").val(0);
+        $("#isFullReleaseIDD").val(0);
+        $("#isContinuingIDD").val(0);
+        $("#isOBRCashAdvanceIDD").val(0);
+    }
+</script>
