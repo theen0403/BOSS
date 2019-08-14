@@ -1,7 +1,0 @@
-﻿@model BOSS.Models.FMAccounts.SubAccountsModel
-@{
-    BOSSEFConnectionString BOSSDB = new BOSSEFConnectionString();
-}
-@using BOSS.Models;
-
-@Html.TextBoxFor(m => m.GenAccountCode, new { @class = "myInput text-right", type = "text", id = "GenAccountCode", disabled = "disabled" })
